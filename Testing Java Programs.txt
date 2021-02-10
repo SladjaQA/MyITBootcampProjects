@@ -1,0 +1,96 @@
+Domaci od 24.12.2020.
+Zadatak 1.
+Napisati funkciju koja za parametre prima tri broja num1, num2 i num3i proverava da li je zbir num1 i num2 jednak num3.
+Primer:
+Ako se unese num1 = 2, num2 = 4, i num3 = 99 vraca false
+Ako se unese num1 = 2, num2 = 4, i num3 = 6 vraca true
+TEST:
+Za unose brojeva koristila sam: num1         num2         num3
+                                 2            4            6         //true
+                                -2            4            2
+                                 2           -4            2
+                                -4           -4           -8
+                               -2147483648   2147483647   -1
+                            **************************************************************************************
+                               -2147483649    /             /       //izbaci gresku, jer je defnisan kao int
+                               -2147483648   2147483648     /
+                                2147483647   2147483647     /
+                                 č
+                                0.0
+                                 #
+                                 5e
+                                enter pre nego sto ukucam bilo sta  //dozvoljava da mnogo puta ukucam enter i nista se ne desava, a kad nakon toga ukucam validan broj, prihvati ga skroz korektno.
+                                isto se desava kada unosim backspace, broj i ponovo backspace, enter i program radi.
+                            **************************************************************************************    
+                                 0            4            6         //false
+                                -2            0            2
+                                 2           -4            0
+
+Bug bi mogao biti nedostatak programa da proverava velike cifre, u tom slucaju u kodu treba definisati brojeve za unos sa long tipom.
+Po zahtevu nije predvidjeno da usled invalidnog unosa izlazi odredjena poruka o tome, pa to ne smatram nedostatkom, ali ukazujem na to.
+
+
+Zadatak 2.
+Napisati funkciju koja vraca sumu dva niza, zatim od niza sa vecom sumom oduzme sumu drugog niza i vrati da li je veci niz i dalje veci
+Primer:
+Ako se unese prvi niz 1,2,3 (suma je 6) i drugi niz 10,20,30 (suma 60) onda 60 - 6 = drugi niz je i dalje veci, vraca true.
+TEST:	​
+Za unose brojeva koristila sam: niz1                 niz2         				
+                                {1,2,3}              {10,20,30}     //true
+                                {10,20,30}           {1,2,3}
+                                {0,0,0}              {1,2,3}
+                                {-1,-2,-3}           {-10,-20,-30}
+                            **************************************************************************************
+                                {1,2,3}              {1,2,8}        //false, ali vraca true(veci niz postaje manji)
+                            **************************************************************************************
+                                {1,2,3}              {7,2,3}        //nakon oduzimanja manjeg niza, veci niz je jednak manjem nizu, a program vraca da je i dalje veci.
+                                {1,2,3}              {1,2,3}        //ukoliko su nizovi, jednaki pri prvom unosu, nastavlja sa radnjama i vraca rezultat umesto poruke o gresci
+                                //bilo koji unos koji nije int, automatski blokira program.
+
+Program ne prihvata invalidne unose(brojeve manje od-2147483648 i vece od 2147483647, slovo ili znak).
+Kodom nisu pokriveni slucajevi kada su sume jednake pri prvoj proveri, niti slucajevi kada su sume jednake nakon umanjenja vece sume za manju, sto je bug.
+U slucaju kada je veca suma nakon oduzimanja manje sume postala manja, program vraca da je veca suma i dalje veca, to je takodje bug.
+
+
+
+Domaci od 25.12.2020.
+Zadatak 1.                   
+Napisati program gde korisnik unese ime, prezime i pol,a program mu vrati "Dobrodosao u IT + (ime i prezime)" ili "Dobrodosla u IT + (ime i prezime)" zavisno koji pol unese
+TEST:
+S obzirom da program, po zahtevu vraca na osnovu unesenog pola, u polja ime i prezime, dozvoljava bilo koji unos(broj,znakove,slova,ali kao i u ranijim primerima nakon backspace i dalje ocekuje unos, kao i nakon praznog entera).
+Polje pol, isljucivo reaguje na unos "muski" ili "zenski", osetljivo je na veliko ili malo slovo, a ukoliko se pokusa sa brojem, slovima koja nisu ove dve reci ili nekim znakovima, vraca poruku "Niste uneli odgovarajuci pol",
+koja nije u skladu sa zahtevima, ali je feature.
+		
+		
+Zadatak 2.
+Napisati program koji prikazuje sve proste brojeve od 0 do 100
+TEST:
+Program ispisuje proste brojeve od nula do sto, proverila sam brojeve na wikipediji ;)
+Ali u samom ispisu rezultata pise:"Prosti brojevi od 1 do 100 su:", stavljena je jedinica umesto nule.
+
+
+Zadatak 3.
+Napisati program gde korisnik unese broj, a program mu vrati odgovor da li je unet broj prost ili ne
+TEST:
+Za unose brojeva koristila sam: num (-9,0,1)   //za ove brojeve program vraca da su prosti brojevi a nisu, dakle u kodu treba proveriti da li postoji uslov da prost broj mora bit veci od 1. Ovo je bug
+                                num (2,5,9,14) //vraca ocekivano
+                                za brojeve vece od int(2147483647) ne radi, pa treba promeniti u long ukoliko zelimo da radi za vece cifre.
+Program vraca tekst:"Broj je prost broj" ili "Broj nije prost broj", ali ne ispisuje ponovo uneti broj od strane korisnika.
+Program ima bug, kada se unesu brojevi manji od dva, za njih vraca da su prosti brojevi.
+
+
+Zadatak 4.
+Napisati funkciju koja racuna aritmeticku sredinu niza 
+TEST:
+Za unose brojeva koristila sam: broj clanova niza: {0}                    //Za 0 poziva da unesem vrednosti niza i odmah zatim ispisuje da je aritmeticka sredina niza "NaN"
+                                                   {-1,a,A,$,%,Broj,5e}   //za ove vrednosti automatski izbacuje gresku.
+                                                   {1,5,2147483647}       // regularno trazi da unesemo vrednosti niza
+                               *******************************************************************************************************************
+                                vrednosti niza:    {-2147483648,-1,0,1,2147483647}   //prihvata vrednosti kao validne
+                                                   {-1,a,A,$,%,Broj,5e}              //za ove vrednosti automatski izbacuje gresku.
+                               *******************************************************************************************************************
+                                provera matematike: (1,2,3)/3      //dobro racuna
+                                                    (-3,4,-1)/3    //ispisuje nulu
+                                                    (5,4,4)/3      //ispisuje decimale iza zareza
+                                                    (-5,-4,-4)/3   //ispisuje negativan broj
+Program naizgled radi bez greske, osim donekle cudnog ponasanja kada se za broj clanova niza unese nula.
